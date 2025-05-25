@@ -1,3 +1,4 @@
+import 'package:auth_demo/home_screen.dart';
 import 'package:auth_demo/login_screen.dart';
 import 'package:auth_demo/signup_screen.dart';
 import 'package:auth_demo/wrapper_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (_) => const WrapperScreen(),
+        '/home': (_) => const HomeScreen(),
         '/login': (_) => const LoginScreen(),
         '/signup': (_) => const SignUpScreen(),
       },
