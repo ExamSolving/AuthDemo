@@ -8,16 +8,17 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 'Sign Up',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 50),
               const TextField(
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
@@ -60,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 child: const Text("Sign Up"),
               ),
-              const Spacer(),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

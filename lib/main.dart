@@ -1,5 +1,6 @@
 import 'package:auth_demo/login_screen.dart';
 import 'package:auth_demo/signup_screen.dart';
+import 'package:auth_demo/wrapper_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: false),
       initialRoute: '/',
       routes: {
-        '/': (_) => const LoginScreen(),
+        '/': (_) => const WrapperScreen(),
+        '/login': (_) => const LoginScreen(),
         '/signup': (_) => const SignUpScreen(),
       },
     );
