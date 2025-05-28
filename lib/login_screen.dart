@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
@@ -52,6 +55,30 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } finally {
       setState(() => _isLoading = false);
+    }
+  }
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      // Trigger the Google authentication flow
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) return null; // user canceled
+
+      // Obtain the auth details
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase with the Google credential
+      return await _auth.signInWithCredential(credential);
+    } catch (e) {
+      print("Google Sign-In Error: $e");
+      return null;
     }
   }
 
@@ -168,12 +195,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     text: "Sign in with Google",
                     padding: const EdgeInsets.all(8),
-                    onPressed: () {
-                      // TODO: Implement actual Google Sign-In logic here
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("Google Sign-In coming soon")),
-                      );
+                    onPressed: () async {
+                      final userCredential = await signInWithGoogle();
+                      if (userCredential != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  'Signed in as ${userCredential.user?.displayName}')),
+                        );
+                      }
+                      // // TODO: Implement actual Google Sign-In logic here
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(
+                      //       content: Text("Google Sign-In coming soon")),
+                      // );
                     },
                   ),
                 ),
