@@ -1,3 +1,4 @@
+import 'package:auth_demo/forgot_password_screen.dart';
 import 'package:auth_demo/home_screen.dart';
 import 'package:auth_demo/login_screen.dart';
 import 'package:auth_demo/signup_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/home': (_) => const HomeScreen(),
         '/login': (_) => const LoginScreen(),
         '/signup': (_) => const SignUpScreen(),
+        '/forgot': (_) => const ForgotPasswordScreen()
       },
     );
   }
