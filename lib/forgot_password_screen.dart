@@ -28,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         _isLoading = true;
       });
 
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      await _auth.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Reset Password sent to $email')));
     } on FirebaseAuthException catch (e) {
